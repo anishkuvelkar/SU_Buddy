@@ -17,6 +17,8 @@
     "image-type": "^5.2.0",
     "mongoose": "^8.3.0",
     "multer": "^1.4.5-lts.1",
+    "nodejs-nodemailer-outlook": "^1.2.4",
+    "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0"
   }
 }

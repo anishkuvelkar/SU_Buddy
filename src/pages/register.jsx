@@ -8,7 +8,7 @@ import {toast} from 'react-hot-toast';
 import {useNavigate} from 'react-router-dom'
 
 const Register = () => {
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('');
@@ -149,6 +149,7 @@ const Register = () => {
       console.error('Error fetching countries:', error);
     }
   };
+  const[msg,setMsg] = useState("");
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
@@ -191,11 +192,11 @@ const Register = () => {
         setEmail('');
         setSelectedCountry('');
         setAbout('');
+        document.querySelector('input[type=file]').value =''
         setImage(null);
         setPassword('');
         setConfirmPassword('');
-        toast.success('Registration successful. Please login.');
-        navigate('/login');
+        toast.success('An Email has been sent to your account,please verify!!');
       }
     } catch (error) {
       toast.error(error.response.data.error);

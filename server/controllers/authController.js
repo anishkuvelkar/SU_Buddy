@@ -1,5 +1,7 @@
 const User = require('../models/user');
-
+const Token =require("../models/token");
+const sendEmail = require("../utils/sendEmail");
+const crypto = require("crypto");
 const test = (req, res) => {
   try {
     res.status(200).json({ message: 'Test is working' });
@@ -69,11 +71,11 @@ const registerUser = async (req, res) => {
     }
 
     // Check if user already exists
-    const exist = await User.findOne({ email });
+    let exist = await User.findOne({ email });
     if (exist) {
       return res.status(400).json({ error: 'Email is already taken.' });
     }
-
+  
     // Create new user
     const user = await User.create({
       firstName,
@@ -90,9 +92,27 @@ const registerUser = async (req, res) => {
       password,
       confirmPassword
     });
-
+    // if (!user.verified){
+    //   let token = await Token.findOne({userId: user._});
+    //   if(!token) {
+    //   token = await new Token({
+    //   userId: user._id,
+    //   token: crypto.randomBytes(32).toString("hex"),
+    //   }).save();
+    //   const url = '${process.env.BASE_URL}users/${user._id}/verify/${token.token}';
+    //   await sendEmail(user.email, "Verify Email",url);
+    //   }
+    //   return res.status(400).send({message:"An email is sent to your account,please verify"});
+    // }
+  
+     const token = await new Token({
+    userId: user._id,
+    token: crypto.randomBytes(32).toString("hex")
+ }).save();
+const url = `${process.env.BASE_URL}/${user._id}/verify/${token.token}`;
+await sendEmail(user.email,"Verify Email",url);
     // Return success response
-    res.status(201).json({ message: 'User registered successfully', user });
+    res.status(201).json({ message: 'An email has been sent to your account, please verify', user });
     console.log(req.file.mimetype)
   } catch (error) {
     console.error(error);
