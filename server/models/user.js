@@ -15,6 +15,7 @@ const userSchema = new Schema({
     image: {type: String,required: true},
     password: {type: String, required: true},
     confirmPassword: {type: String, required: true},
+    fourDigitValue: {type: String, required: true},
     verified:{type : Boolean, default: false}
 });
 

@@ -25,12 +25,13 @@ const registerUser = async (req, res) => {
       selectedCountry,
       about,
       image,
+      fourDigitValue,
       password,
       confirmPassword
     } = req.body;
   console.log(req.file)
     // Check required fields
-    if (!firstName || !lastName || !dateOfBirth || !gender || !department || !subject || !status || !email || !selectedCountry || !about || !password || !confirmPassword || !req.file) {
+    if (!firstName || !lastName || !dateOfBirth || !gender || !department || !subject || !status || !email || !selectedCountry || !about || !password ||!fourDigitValue|| !confirmPassword || !req.file) {
     return res.status(400).json({ error: 'All fields are required.' });
   }
     // Check name length
@@ -48,6 +49,17 @@ const registerUser = async (req, res) => {
     const emailRegex = /.+@syr\.edu$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ error: 'Email must end with "@syr.edu".' });
+    }
+
+     // Check if fourDigitValue represents a valid year (e.g., between 1900 and the current year)
+    if (isNaN(fourDigitValue)) {
+      return res.status(400).json({ error: 'Four digit value must be a number.' });
+    }
+   
+    const currentYear = new Date().getFullYear();
+    const tenYearsFromNow = currentYear + 10;
+    if (fourDigitValue < 1900 || fourDigitValue > tenYearsFromNow) {
+      return res.status(400).json({ error: 'Four digit value must be a valid year.' });
     }
 
     //check image type
@@ -89,6 +101,7 @@ const registerUser = async (req, res) => {
       selectedCountry,
       about,
       image:req.file.filename,
+      fourDigitValue,
       password,
       confirmPassword
     });

@@ -23,6 +23,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [image, setImage] = useState(null);
   const [about, setAbout] = useState('');
+  const [fourDigitValue, setFourDigitValue] = useState('');
 
   const departments = [
     'College of Arts and Sciences',
@@ -173,6 +174,7 @@ const Register = () => {
         formData.append('image',image)
         formData.append('password',password)
         formData.append('confirmPassword',confirmPassword)
+        formData.append('fourDigitValue',fourDigitValue)
       ;
      console.log(formData,axios)
      const response = await axios.post('/register', formData,{ headers: {'Content-Type': 'multipart/form-data'}});
@@ -196,13 +198,14 @@ const Register = () => {
         setImage(null);
         setPassword('');
         setConfirmPassword('');
+        setFourDigitValue('');
         toast.success('An Email has been sent to your account,please verify!!');
       }
     } catch (error) {
       toast.error(error.response.data.error);
       console.log(error.message);
     }
- console.log('Form submitted:', { firstName, lastName, dateOfBirth, gender, department, subject, status, email, selectedCountry,about });
+ console.log('Form submitted:', { firstName, lastName, dateOfBirth, gender, department, subject, status, email, selectedCountry,about,fourDigitValue });
   };
   return (
     <div className="container mx-auto mt-8 ">
@@ -290,6 +293,18 @@ const Register = () => {
           <input type="file"  name="image" id="image" onChange={(e) => setImage(e.target.files[0])} className="mt-1 block w-full" />
         </div>
         <div className="mb-4">
+           <label htmlFor="fourDigitInput" className="block text-sm font-medium text-gray-700">Class of</label>
+           <input
+            type="text"
+           id="fourDigitInput"
+           name="fourDigitInput"
+           value={fourDigitValue}
+           onChange={(e) => setFourDigitValue(e.target.value)}
+           className={`mt-1 block w-full rounded-md border border-black focus:border-indigo-500 focus:ring-indigo-500`}
+          placeholder="Enter your graduation year"
+         />
+      </div>
+        <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
           <input type="email" id="email"  name="email"  value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 block w-full rounded-md border border-black focus:border-indigo-500 focus:ring-indigo-500" />
         </div>
@@ -297,7 +312,7 @@ const Register = () => {
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
           <input type="password" id="password"  name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="mt-1 block w-full rounded-md border border-black focus:border-indigo-500 focus:ring-indigo-500" />
         </div>
-        <div className="mb-4">
+       <div className="mb-4">
           <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
           <input type="password" id="confirmPassword" name="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="mt-1 block w-full rounded-md border border-black focus:border-indigo-500 focus:ring-indigo-500" />
         </div>
