@@ -1,10 +1,11 @@
 const express = require('express')
 const router = express.Router();
 const cors = require('cors')
-const {test,registerUser} = require('../controllers/authController')
+const {test,registerUser,loginUser} = require('../controllers/authController')
 const multer = require('multer')
 const User = require('../models/user');
 const Token = require('../models/token');
+
 
 const upload = multer({ dest: 'images/' })
 //middleware
@@ -17,6 +18,9 @@ router.use(
 
 router.get('/',test)
 router.post('/register',upload.single('image'), registerUser)
+
+router.post('/login', loginUser)
+
 router.get("/:id/verify/:token",async(req,res)=>{
     try {
         const user = await User.findOne({_id: req.params.id});

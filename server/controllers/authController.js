@@ -1,7 +1,13 @@
+
 const User = require('../models/user');
-const Token =require("../models/token");
+const Token = require("../models/token");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+///////////////added for login authentication - sharvari
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+////////////////
 const test = (req, res) => {
   try {
     res.status(200).json({ message: 'Test is working' });
@@ -29,11 +35,11 @@ const registerUser = async (req, res) => {
       password,
       confirmPassword
     } = req.body;
-  console.log(req.file)
+    console.log(req.file)
     // Check required fields
-    if (!firstName || !lastName || !dateOfBirth || !gender || !department || !subject || !status || !email || !selectedCountry || !about || !password ||!fourDigitValue|| !confirmPassword || !req.file) {
-    return res.status(400).json({ error: 'All fields are required.' });
-  }
+    if (!firstName || !lastName || !dateOfBirth || !gender || !department || !subject || !status || !email || !selectedCountry || !about || !password || !fourDigitValue || !confirmPassword || !req.file) {
+      return res.status(400).json({ error: 'All fields are required.' });
+    }
     // Check name length
     if (firstName.length < 3 || lastName.length < 3) {
       return res.status(400).json({ error: 'First name and last name should be at least 3 characters long.' });
@@ -44,18 +50,18 @@ const registerUser = async (req, res) => {
     if (dob >= today) {
       return res.status(400).json({ error: 'Date of birth cannot be today or in the future.' });
     }
-    
+
     // Check email format
     const emailRegex = /.+@syr\.edu$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ error: 'Email must end with "@syr.edu".' });
     }
 
-     // Check if fourDigitValue represents a valid year (e.g., between 1900 and the current year)
+    // Check if fourDigitValue represents a valid year (e.g., between 1900 and the current year)
     if (isNaN(fourDigitValue)) {
       return res.status(400).json({ error: 'Four digit value must be a number.' });
     }
-   
+
     const currentYear = new Date().getFullYear();
     const tenYearsFromNow = currentYear + 10;
     if (fourDigitValue < 1900 || fourDigitValue > tenYearsFromNow) {
@@ -87,7 +93,7 @@ const registerUser = async (req, res) => {
     if (exist) {
       return res.status(400).json({ error: 'Email is already taken.' });
     }
-  
+
     // Create new user
     const user = await User.create({
       firstName,
@@ -100,7 +106,7 @@ const registerUser = async (req, res) => {
       email,
       selectedCountry,
       about,
-      image:req.file.filename,
+      image: req.file.filename,
       fourDigitValue,
       password,
       confirmPassword
@@ -117,13 +123,13 @@ const registerUser = async (req, res) => {
     //   }
     //   return res.status(400).send({message:"An email is sent to your account,please verify"});
     // }
-  
-     const token = await new Token({
-    userId: user._id,
-    token: crypto.randomBytes(32).toString("hex")
- }).save();
-const url = `${process.env.BASE_URL}/${user._id}/verify/${token.token}`;
-await sendEmail(user.email,"Verify Email",url);
+
+    const token = await new Token({
+      userId: user._id,
+      token: crypto.randomBytes(32).toString("hex")
+    }).save();
+    const url = `${process.env.BASE_URL}/${user._id}/verify/${token.token}`;
+    await sendEmail(user.email, "Verify Email", url);
     // Return success response
     res.status(201).json({ message: 'An email has been sent to your account, please verify', user });
     console.log(req.file.mimetype)
@@ -133,7 +139,51 @@ await sendEmail(user.email,"Verify Email",url);
   }
 };
 
+
+//added to implemennt login authentication
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check if the user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    // Check if the password is correct
+    // const isMatch = await bcrypt.compare(password, user.password);
+    if (password !== user.password) {
+      return res.status(401).json({ message: 'Invalid password' });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRE || '1h', // or whatever expiry you prefer
+    });
+
+    // Send the token in the response
+    res.json({
+      message: 'Login successful',
+      token,
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        // Include any other user info you want to return
+      },
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
 module.exports = {
   test,
-  registerUser
+  registerUser,
+  loginUser 
 };

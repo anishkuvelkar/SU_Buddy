@@ -8,9 +8,9 @@ import Footer from "./components/footer";
 import Services from "./pages/services";
 import About from "./pages/about";
 import News from "./pages/news";
+import Home from "./pages/home";
 import axios from 'axios';
 import {Toaster} from 'react-hot-toast';
-
 
 axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.withCredentials= true
@@ -28,6 +28,7 @@ export default function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login/>} />
+            <Route path="/home" element={<Home/>} />
             <Route path="/register" element={<Register/>} />
           </Routes>
           <Footer />

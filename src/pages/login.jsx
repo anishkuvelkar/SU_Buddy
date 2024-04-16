@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom'; 
+import axios from 'axios'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
-  const handleLogin = (e) => {
+  const navigate = useNavigate(); // To handle redirection
+  const handleLogin = async(e) => {
     e.preventDefault();
     
     // Reset error state
@@ -24,7 +26,26 @@ const Login = () => {
     // Proceed with login logic
     console.log('Email:', email);
     console.log('Password:', password);
-  }
+    try {
+    const formData = new FormData() 
+    formData.append("email", email)
+    formData.append("password", password)
+    const response = await axios.post('/login', formData, { headers: {'Content-Type': 'application/json'}});
+    const data = response.data;
+
+      if (response.status === 200) {
+        // Assuming the token is returned upon successful authentication
+        localStorage.setItem('token', data.token); // Save the token in local storage
+        navigate('/home'); // Redirect to the home page
+      } else {
+        setError(data.message || 'An error occurred'); // Set an error message from the response
+      }
+    } catch (error) {
+      console.log(error);
+      console.error('Login request failed', error);
+      setError('Failed to log in');
+    }
+  };
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -49,7 +70,7 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                pattern="[a-z0-9._%+-]+@syr\.edu$"
+                // pattern="[a-z0-9._%+\\-]+@syr\.edu"
                 title="Please enter a valid Syracuse University email address"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
