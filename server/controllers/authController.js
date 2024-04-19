@@ -31,13 +31,13 @@ const registerUser = async (req, res) => {
       selectedCountry,
       about,
       image,
-      fourDigitValue,
+      graduationYear,
       password,
       confirmPassword
     } = req.body;
     console.log(req.file)
     // Check required fields
-    if (!firstName || !lastName || !dateOfBirth || !gender || !department || !subject || !status || !email || !selectedCountry || !about || !password || !fourDigitValue || !confirmPassword || !req.file) {
+    if (!firstName || !lastName || !dateOfBirth || !gender || !department || !subject || !status || !email || !selectedCountry || !about || !password || !graduationYear || !confirmPassword || !req.file) {
       return res.status(400).json({ error: 'All fields are required.' });
     }
     // Check name length
@@ -57,14 +57,14 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ error: 'Email must end with "@syr.edu".' });
     }
 
-    // Check if fourDigitValue represents a valid year (e.g., between 1900 and the current year)
-    if (isNaN(fourDigitValue)) {
+    // Check if graduationYear represents a valid year (e.g., between 1900 and the current year)
+    if (isNaN(graduationYear)) {
       return res.status(400).json({ error: 'Four digit value must be a number.' });
     }
 
     const currentYear = new Date().getFullYear();
     const tenYearsFromNow = currentYear + 10;
-    if (fourDigitValue < 1900 || fourDigitValue > tenYearsFromNow) {
+    if (graduationYear < 1900 || graduationYear > tenYearsFromNow) {
       return res.status(400).json({ error: 'Four digit value must be a valid year.' });
     }
 
@@ -107,7 +107,7 @@ const registerUser = async (req, res) => {
       selectedCountry,
       about,
       image: req.file.filename,
-      fourDigitValue,
+      graduationYear,
       password,
       confirmPassword
     });
@@ -171,6 +171,7 @@ const loginUser = async (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
+  
         // Include any other user info you want to return
       },
     });

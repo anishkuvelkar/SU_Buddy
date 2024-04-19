@@ -23,7 +23,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [image, setImage] = useState(null);
   const [about, setAbout] = useState('');
-  const [fourDigitValue, setFourDigitValue] = useState('');
+  const [graduationYear, setgraduationYear] = useState('');
 
   const departments = [
     'College of Arts and Sciences',
@@ -174,7 +174,7 @@ const Register = () => {
         formData.append('image',image)
         formData.append('password',password)
         formData.append('confirmPassword',confirmPassword)
-        formData.append('fourDigitValue',fourDigitValue)
+        formData.append('graduationYear',graduationYear)
       ;
      console.log(formData,axios)
      const response = await axios.post('/register', formData,{ headers: {'Content-Type': 'multipart/form-data'}});
@@ -198,14 +198,14 @@ const Register = () => {
         setImage(null);
         setPassword('');
         setConfirmPassword('');
-        setFourDigitValue('');
+        setgraduationYear('');
         toast.success('An Email has been sent to your account,please verify!!');
       }
     } catch (error) {
       toast.error(error.response.data.error);
       console.log(error.message);
     }
- console.log('Form submitted:', { firstName, lastName, dateOfBirth, gender, department, subject, status, email, selectedCountry,about,fourDigitValue });
+ console.log('Form submitted:', { firstName, lastName, dateOfBirth, gender, department, subject, status, email, selectedCountry,about,graduationYear });
   };
   return (
     <div className="container mx-auto mt-8 ">
@@ -298,8 +298,8 @@ const Register = () => {
             type="text"
            id="fourDigitInput"
            name="fourDigitInput"
-           value={fourDigitValue}
-           onChange={(e) => setFourDigitValue(e.target.value)}
+           value={graduationYear}
+           onChange={(e) => setgraduationYear(e.target.value)}
            className={`mt-1 block w-full rounded-md border border-black focus:border-indigo-500 focus:ring-indigo-500`}
           placeholder="Enter your graduation year"
          />
