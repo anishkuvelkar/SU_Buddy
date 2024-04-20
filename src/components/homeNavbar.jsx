@@ -5,7 +5,7 @@ import img2 from '../images/profile.jpg';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const navigation = [
-  { name: 'ME', href: '/', current: true },
+  { name: 'ME', href: '/me', current: true },
   { name: 'FIND BUDDY', href: '/home', current: false },
   { name: 'CHAT', href: '/chat', current: false },
   { name: 'GROUPS', href: '/group', current: false },

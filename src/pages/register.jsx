@@ -59,6 +59,8 @@ const Register = () => {
       'Writing Studies, Rhetoric, and Composition'
     ],
     'College of Engineering and Computer Science': [
+      'Computer Engineering',
+      'Computer and Information Science',
       'Biomedical and Chemical Engineering',
       'Civil and Environmental Engineering',
       'Electrical Engineering and Computer Science',

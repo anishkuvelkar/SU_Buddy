@@ -5,8 +5,6 @@ const {test,registerUser,loginUser} = require('../controllers/authController')
 const multer = require('multer')
 const User = require('../models/user');
 const Token = require('../models/token');
-
-
 const upload = multer({ dest: 'images/' })
 //middleware
 router.use(
@@ -39,4 +37,6 @@ router.get("/:id/verify/:token",async(req,res)=>{
         console.log(error)
     }
 })
+
+
 module.exports = router
