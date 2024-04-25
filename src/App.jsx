@@ -10,6 +10,7 @@ import Services from "./pages/services";
 import About from "./pages/about";
 import News from "./pages/news";
 import Home from "./pages/home";
+import UserProfile from "./pages/userProfile";
 import axios from 'axios';
 import {Toaster} from 'react-hot-toast';
 
@@ -31,6 +32,7 @@ export default function App() {
             <Route path="/login" element={<><Navbar /><Login/></>} />
             <Route path="/home" element={<><HomeNavbar/><Home/></>} />
             <Route path="/register" element={<><Navbar /><Register/></>} />
+            <Route path="/userProfile" element={<><HomeNavbar /><UserProfile/></>} />
           </Routes>
           <Footer />
         </Router>

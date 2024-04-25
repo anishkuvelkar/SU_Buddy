@@ -5,10 +5,10 @@ import img2 from '../images/profile.jpg';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const navigation = [
-  { name: 'ME', href: '/me', current: true },
-  { name: 'FIND BUDDY', href: '/home', current: false },
+  { name: 'BUDDIES', href: '/home', current: false },
   { name: 'CHAT', href: '/chat', current: false },
   { name: 'GROUPS', href: '/group', current: false },
+  { name: 'MY ACCOUNT', href: '/userProfile', current: true },
 ];
 
 export default function Navbar() {
