@@ -14,6 +14,7 @@ const navigation = [
 export default function Navbar() {
   const { pathname } = useLocation();
 
+  
   return (
     <Disclosure as="nav" className="bg-gray-900">
       {({ open }) => (

@@ -57,7 +57,11 @@ const HomePage = () => {
                 department: filter.department,
             };
             const response = await axios.get('/users/search', { params });
-            setItems(response.data);
+            const searchupdatedItems = response.data.map(user => ({
+                ...user,
+                imageUrl: `http://localhost:8000/images/${user.image}`
+            }));
+            setItems(searchupdatedItems);
             setIsLoaded(true);
         } catch (err) {
             setError(err.message);
