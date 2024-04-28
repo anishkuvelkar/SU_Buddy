@@ -36,6 +36,8 @@ const Login = () => {
       if (response.status === 200) {
         // Assuming the token is returned upon successful authentication
         localStorage.setItem('token', data.token); // Save the token in local storage
+        console.log('Token:', data.token);
+        console.log(localStorage);
         navigate('/home'); // Redirect to the home page
       } else {
         setError(data.message || 'An error occurred'); // Set an error message from the response
