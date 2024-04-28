@@ -10,7 +10,7 @@ class BasicUser {
       this.department = user.department;
       this.subject = user.subject;
       this.email = user.email;
-      this.country = user.country;
+      this.selectedCountry = user.selectedCountry;
       this.about = user.about;
       this.graduationYear = user.graduationYear;
     }
