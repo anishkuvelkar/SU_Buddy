@@ -1,30 +1,28 @@
 import React from 'react';
-
-const StudentCard = ({ title, image, text, onChat, department, graduationYear }) => {
-    // Syracuse University blue with a bit of opacity
-    const suBlue = { backgroundColor: 'rgba(29, 41, 84, 0.9)' };
-
+const StudentCard = ({ title, imageFilename, onChat, department, graduationYear }) => {
     return (
-        <div className="rounded-xl shadow-lg overflow-hidden text-white bg-blue-900 bg-opacity-90 hover:bg-opacity-100 transition duration-300">
-            <div className="relative w-full h-48">
-                <img src={image} alt={title} className="absolute w-full h-full object-cover" />
-            </div>
-            <div className="p-4 flex flex-col justify-between h-full">
-                <div>
-                    <h3 className="text-xl font-semibold mb-2">{title}</h3>
-                    <p>{department}</p>
-                    <p>Class of {graduationYear}</p>
-                </div>
-                <div className="mt-4">
-                    <button
-                        onClick={onChat}
-                        className="bg-white text-blue-700 font-bold py-2 px-4 rounded hover:bg-blue-200 transition duration-300 mx-auto"
-                    >
-                        Chat with {title}
-                    </button>
-                </div>
-            </div>
+      <div className="max-w-xs mx-auto bg-blue-900 bg-opacity-90 rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl">
+        {/* Image container */}
+        <div className="flex justify-center pt-6">
+          <img src={imageFilename} alt={`Profile of ${title}`} className="rounded-full h-32 w-32 object-cover" />
         </div>
+        {/* Content container */}
+        <div className="p-6 text-center text-white">
+          <h3 className="text-xl font-semibold mb-2">{title}</h3>
+          <p>{department}</p>
+          <p className="mb-4">Class of {graduationYear}</p>
+          {/* Chat button */}
+          <div className="text-center">
+            <button
+              onClick={onChat}
+              className="bg-orange-500 text-white font-bold py-2 px-4 rounded hover:bg-orange-600 transition duration-300"
+            >
+              Chat with {title}
+            </button>
+          </div>
+        </div>
+      </div>
     );
-};
-export default StudentCard;
+  };
+  
+  export default StudentCard;

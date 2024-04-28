@@ -1,14 +1,15 @@
 const User = require('../models/user');
-
 const getAllUsers = async (req, res) => {
   try {
-      const users = await User.find({});
-      
-      res.status(200).json(users);
+    // Assuming 'verified' is a boolean field in your user model
+    const verifiedUsers = await User.find({ verified: true });
+    res.json(verifiedUsers);
   } catch (error) {
-      res.status(500).json({ message: 'Error fetching users', error: error.message });
+    console.error('Get All Users Error:', error);
+    res.status(500).json({ error: 'Internal server error during user retrieval' });
   }
 };
+
 
 const searchUsers = async (req, res) => {
   try {

@@ -2,8 +2,11 @@ const express = require('express');
 const dotenv = require('dotenv').config()
 const cors = require('cors')
 const {mongoose} = require('mongoose')
-
 const app = express();
+const path = require('path');
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+
 //database connection
 mongoose.connect(process.env.MONGO_URL)
 .then(()=> console.log('DB is connected'))

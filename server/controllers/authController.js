@@ -109,19 +109,7 @@ const registerUser = async (req, res) => {
       password,
       confirmPassword
     });
-    // if (!user.verified){
-    //   let token = await Token.findOne({userId: user._});
-    //   if(!token) {
-    //   token = await new Token({
-    //   userId: user._id,
-    //   token: crypto.randomBytes(32).toString("hex"),
-    //   }).save();
-    //   const url = '${process.env.BASE_URL}users/${user._id}/verify/${token.token}';
-    //   await sendEmail(user.email, "Verify Email",url);
-    //   }
-    //   return res.status(400).send({message:"An email is sent to your account,please verify"});
-    // }
-
+    
     const token = await new Token({
       userId: user._id,
       token: crypto.randomBytes(32).toString("hex")
@@ -136,7 +124,6 @@ const registerUser = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 
 //added to implemennt login authentication
 const loginUser = async (req, res) => {

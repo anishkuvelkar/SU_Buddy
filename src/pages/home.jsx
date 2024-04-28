@@ -30,12 +30,17 @@ const HomePage = () => {
         fetchData();
     }, []);
     const fetchData = async () => {
+        
         try {
             const response = await axios.get('/users');
             if (response.status !== 200) {
                 throw new Error('Network response was not ok');
             }
-            setItems(response.data);
+            const updatedItems = response.data.map(user => ({
+                ...user,
+                imageUrl: `http://localhost:8000/images/${user.image}` // Adjust the URL as needed
+            }));
+            setItems( updatedItems); // Example if you get a single image
         } catch (err) {
             setError(err.message);
         } finally {
@@ -69,7 +74,7 @@ const HomePage = () => {
             });
         };
     }
-
+    console.log(items);
         return (
             <section className="relative min-h-screen bg-cover bg-center bg-fixed" style={{ backgroundImage: `url(${backgroundImage})`, filter: 'brightness(80%)' }}>
                 <div className="container mx-auto p-4">
@@ -136,8 +141,8 @@ const HomePage = () => {
                             {items.map((item) => (
                                 <StudentCard
                                     key={item._id}
-                                    title={item.firstName}
-                                    image={item.imageUrl}
+                                    title={`${item.firstName} ${item.lastName}`}
+                                    imageFilename={item.imageUrl}
                                     department={item.department}
                                     graduationYear={item.graduationYear}
 
