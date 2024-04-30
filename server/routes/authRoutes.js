@@ -2,10 +2,11 @@ const express = require('express')
 const router = express.Router();
 const cors = require('cors')
 const {test,registerUser,loginUser} = require('../controllers/authController')
-const multer = require('multer')
 const User = require('../models/user');
 const Token = require('../models/token');
-const upload = multer({ dest: 'images/' })
+const cloudinary = require("../helper/cloudinaryconfig");
+//const upload = multer({ dest: 'images/' })
+const multer = require("multer");
 //middleware
 router.use(
     cors({
@@ -13,6 +14,29 @@ router.use(
         origin: "http://localhost:5173"
     })
 )
+const imgconfig = multer.diskStorage({
+    destination:(req,file,callback)=>{
+        callback(null,"images/")
+    },
+    filename:(req,file,callback)=>{
+        callback(null,`image-${Date.now()}.${file.originalname}`)
+    }
+});
+// img filter
+const isImage = (req,file,callback)=>{
+    if(file.mimetype.startsWith("image")){
+        callback(null,true)
+    }else{
+        callback(new Error("only images is allow"))
+    }
+}
+
+const upload = multer({
+    storage:imgconfig,
+    fileFilter:isImage
+})
+
+
 
 router.get('/',test)
 router.post('/register',upload.single('image'), registerUser)

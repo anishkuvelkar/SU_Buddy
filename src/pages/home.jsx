@@ -4,7 +4,7 @@ import backgroundImage from '../images/su.jpg'
 import axios from 'axios';
 
 const HomePage = () => {
-    const graduationYears = Array.from({ length: 11 }, (_, index) => 2020 + index);  // Array of years from 2020 to 2030
+    const graduationYears = Array.from({ length: 150 }, (_, index) => 1900 + index);  // Array of years from 2020 to 2030
     const departments = ['College of Arts and Sciences',
         'College of Engineering and Computer Science',
         'College of Visual and Performing Arts',
@@ -38,7 +38,7 @@ const HomePage = () => {
             }
             const updatedItems = response.data.map(user => ({
                 ...user,
-                imageUrl: `http://localhost:8000/images/${user.image}` // Adjust the URL as needed
+                imageUrl: user.image // Adjust the URL as needed
             }));
             setItems( updatedItems); // Example if you get a single image
         } catch (err) {
@@ -59,7 +59,7 @@ const HomePage = () => {
             const response = await axios.get('/users/search', { params });
             const searchupdatedItems = response.data.map(user => ({
                 ...user,
-                imageUrl: `http://localhost:8000/images/${user.image}`
+                imageUrl: user.image
             }));
             setItems(searchupdatedItems);
             setIsLoaded(true);

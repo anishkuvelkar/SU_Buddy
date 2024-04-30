@@ -13,6 +13,7 @@ class BasicUser {
       this.selectedCountry = user.selectedCountry;
       this.about = user.about;
       this.graduationYear = user.graduationYear;
+      this.image = user.image;
     }
   }
   

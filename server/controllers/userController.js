@@ -16,9 +16,8 @@ const getAllUsers = async (req, res) => {
 const searchUsers = async (req, res) => {
   try {
     const { name, graduationYear, department} = req.query;
-
+   let query = { verified: true };
     // Building the query based on provided filters
-    let query = {};
 
     if (name) {
       const regex = new RegExp(`^${name}`, 'i'); // '^' anchors to the start of the string

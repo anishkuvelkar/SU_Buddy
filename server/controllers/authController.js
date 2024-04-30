@@ -4,6 +4,7 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cloudinary = require("../helper/cloudinaryconfig");
 
 ////////////////
 const test = (req, res) => {
@@ -68,7 +69,7 @@ const registerUser = async (req, res) => {
 
     //check image type
     if (!req.file || !['image/jpeg', 'image/png', 'image/webp'].includes(req.file.mimetype)) {
-      console.log(req.file.mimetype)
+      console.log(req.file.mimetype);
       return res.status(400).json({ error: 'Only JPG, PNG, and WEBP images are allowed.' });
     }
 
@@ -91,6 +92,8 @@ const registerUser = async (req, res) => {
     if (exist) {
       return res.status(400).json({ error: 'Email is already taken.' });
     }
+    
+    const upload = await cloudinary.uploader.upload(req.file.path);
 
     // Create new user
     const user = await User.create({
@@ -104,7 +107,7 @@ const registerUser = async (req, res) => {
       email,
       selectedCountry,
       about,
-      image: req.file.filename,
+      image: upload.secure_url,
       graduationYear,
       password,
       confirmPassword
@@ -118,7 +121,6 @@ const registerUser = async (req, res) => {
     await sendEmail(user.email, "Verify Email", url);
     // Return success response
     res.status(201).json({ message: 'An email has been sent to your account, please verify', user });
-    console.log(req.file.mimetype)
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -141,8 +143,10 @@ const loginUser = async (req, res) => {
     if (password !== user.password) {
       return res.status(401).json({ message: 'Invalid password' });
     }
-
-    // Generate JWT token
+    if (!user.verified) {
+      return res.status(401).json({ message: 'Account not verified. Please verify your email to log in.' });
+    }
+   // Generate JWT token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRE || '100h', // or whatever expiry you prefer
     });

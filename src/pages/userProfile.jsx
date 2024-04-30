@@ -83,8 +83,8 @@ const StudentProfile = ({ user }) => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="flex items-center">
             <div className="rounded-full overflow-hidden border-2 border-gray-200 hover:border-blue-500">
-              <img src={`/images/${user.image || 'default-profile.png'}`} alt="Profile" className="w-32 h-32" />
-            </div>
+            <img src={user.image || 'default-profile.png'} alt="Profile" className="w-32 h-32" />
+          </div>
             <div className="ml-4">
               <h1 className="text-xl font-bold text-gray-800">{user.firstName} {user.lastName}</h1>
               <p className="text-gray-600">About me: {user.about}</p>
@@ -152,7 +152,7 @@ Greetings, esteemed alumni! Welcome back to your alma mater. Hello, alumni! Your
       <div className="bg-white rounded-lg shadow-md p-6">
         <div className="flex items-center">
           <div className="rounded-full overflow-hidden border-2 border-gray-200 hover:border-blue-500">
-            <img src={`/images/${user.image || 'default-profile.png'}`} alt="Profile" className="w-32 h-32" />
+          <img src={user.image || 'default-profile.png'} alt="Profile" className="w-32 h-32" />
           </div>
           <div className="ml-4">
             <h1 className="text-xl font-bold text-gray-800">{user.firstName} {user.lastName}</h1>
