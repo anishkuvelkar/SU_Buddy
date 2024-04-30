@@ -75,7 +75,10 @@ const StudentProfile = ({ user }) => {
       <div className="bg-gray-100 rounded-lg p-4 border border-gray-300">
       <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg">
   <p className="text-lg">
-    Welcome, student! It's great to have you here. Hello, student! Ready to embark on your academic journey? Hey there, student! Let's make this semester amazing together.
+  Welcome to our website! We're thrilled to have you join us on this educational journey. As you navigate through our platform, you'll find a wealth of resources, support,
+   and opportunities to enhance your learning experience. Whether you're a new student exploring your academic options or a returning student continuing your studies, 
+   we're here to provide guidance and assistance every step of the way. Our goal is to create a welcoming and inclusive community where you can thrive academically and personally.
+    Together, let's make the most of this opportunity and achieve great things. Welcome aboard!
   </p>
 </div>
 </div>
