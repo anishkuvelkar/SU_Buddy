@@ -112,6 +112,12 @@ const HomePage = () => {
 
     const handleSearch = async () => {
         setIsLoaded(false);
+    
+        const token = localStorage.getItem('token');
+        const currentUser = token ? parseJwt(token) : null;
+    
+        console.log("Current User ID from JWT:", currentUser?.userId);
+    
         try {
             const params = {
                 name: studentName,
@@ -119,7 +125,10 @@ const HomePage = () => {
                 department: filter.department,
             };
             const response = await axios.get('/users/search', { params });
-            const searchupdatedItems = response.data.map(user => ({
+            const searchupdatedItems = response.data.filter(userItem => {
+                console.log("Comparing API user ID:", userItem._id, "with JWT ID:", currentUser?.userId);
+                return currentUser && userItem._id !== currentUser.userId;
+            }).map(user => ({
                 ...user,
                 imageUrl: user.image
             }));
