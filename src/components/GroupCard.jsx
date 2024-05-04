@@ -5,7 +5,8 @@ const GroupCard = ({ name, imageUrl, link }) => {
         <div className="max-w-xs mx-auto bg-blue-900 bg-opacity-90 rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-2xl">
             {/* Image container */}
             <div className="flex justify-center pt-6">
-                <img src={imageUrl} alt={`Logo of ${name}`} className="rounded h-32 w-32 object-cover" />
+                
+                <img src='SU_Buddy\src\images\slider1.jpg' alt={`Logo of ${name}`} className="rounded h-32 w-32 object-cover" />
             </div>
             {/* Content container */}
             <div className="p-6 text-center text-white">

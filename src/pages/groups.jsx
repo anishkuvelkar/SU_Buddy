@@ -60,7 +60,7 @@ const Groups = () => {
             // If a club is selected, set selected info for the club
             setSelectedInfo({
                 name: filter.club,
-                imageUrl: '/path/to/club/image.jpg',  // Placeholder, replace with actual path
+                imageUrl: '..SU_Buddy\src\images\slider1.jpg',  // Placeholder, replace with actual path
                 link: '/path/to/club/chat'            // Placeholder, replace dynamically
             });
         } else if (filter.department && filter.branch) {
@@ -68,7 +68,7 @@ const Groups = () => {
             const groupName = `${filter.department} - ${filter.branch}`;
             setSelectedInfo({
                 name: groupName,
-                imageUrl: '/path/to/group/image.jpg',  // Placeholder, replace with actual path
+                imageUrl: '..SU_Buddy\src\images\slider1.jpg',  // Placeholder, replace with actual path
                 link: '/path/to/group/chat'            // Placeholder, replace dynamically
             });
         } else {

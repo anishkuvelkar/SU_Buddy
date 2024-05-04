@@ -1,9 +1,33 @@
 import StudentCard from '../components/studentCard';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext  } from 'react';
 import backgroundImage from '../images/su.jpg'
 import axios from 'axios';
-
 const HomePage = () => {
+    // Decode token to get user info
+    const token = localStorage.getItem('token');
+    const currentUser = token ? parseJwt(token) : null;
+    console.log("Current User Email:", currentUser?.email);
+    
+    function parseJwt(token) {
+    try {
+        console.log("Original Token:", token);
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        console.log("Decoded Base64 URL:", window.atob(base64)); // See what's decoded before URI processing
+        const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        console.log("JSON Payload:", jsonPayload); // Log the actual JSON string
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        console.error("Failed to decode JWT:", e);
+        return null;
+    }
+}
+
+    
+
     const graduationYears = Array.from({ length: 150 }, (_, index) => 1900 + index);  // Array of years from 2020 to 2030
     const departments = ['College of Arts and Sciences',
         'College of Engineering and Computer Science',
@@ -19,6 +43,7 @@ const HomePage = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
     const [studentName, setSearch] = useState('');
+    const [users, setUsers] = useState([]);
     const [filter, setFilter] = useState({
         graduationYear: '',
         department: '',
@@ -28,17 +53,20 @@ const HomePage = () => {
 
     useEffect(() => {
         fetchData();
-    }, []);
-    const fetchData = async () => {
+    },[currentUser?.email]);
+   /* const fetchData = async () => {
         
         try {
             const response = await axios.get('/users');
             if (response.status !== 200) {
                 throw new Error('Network response was not ok');
             }
-            const updatedItems = response.data.map(user => ({
+            
+            const updatedItems = response.data.filter(userItem => user && userItem.email !== user.email).map(user => ({
+                
                 ...user,
                 imageUrl: user.image // Adjust the URL as needed
+                
             }));
             setItems( updatedItems); // Example if you get a single image
         } catch (err) {
@@ -46,7 +74,41 @@ const HomePage = () => {
         } finally {
             setIsLoaded(true);
         }
+    };*/
+    const fetchData = async () => {
+        setIsLoaded(false);
+    
+        const token = localStorage.getItem('token');
+        const currentUser = token ? parseJwt(token) : null;
+    
+        console.log("Current User ID from JWT:", currentUser?.userId);
+    
+        try {
+            const response = await axios.get('/users');
+            if (response.status !== 200) {
+                throw new Error('Network response was not ok');
+            }
+            
+            console.log("Users fetched from API:", response.data);
+    
+            const updatedItems = response.data.filter(userItem => {
+                console.log("Comparing API user ID:", userItem._id, "with JWT ID:", currentUser?.userId);
+                return currentUser && userItem._id !== currentUser.userId;
+            }).map(user => ({
+                ...user,
+                imageUrl: user.image
+            }));
+    
+            console.log("Filtered Items:", updatedItems);
+            setItems(updatedItems);
+        } catch (err) {
+            setError(err.message);
+            console.error("Error during fetch or processing:", err);
+        } finally {
+            setIsLoaded(true);
+        }
     };
+    
 
     const handleSearch = async () => {
         setIsLoaded(false);
@@ -149,6 +211,7 @@ const HomePage = () => {
                                     imageFilename={item.imageUrl}
                                     department={item.department}
                                     graduationYear={item.graduationYear}
+                                    email={item.email}
 
                                 />
                             ))}

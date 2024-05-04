@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi'; // Make sure to install react-icons if not already
 const navigation = [
   { name: 'BUDDIES', href: '/home', current: false },
-  { name: 'CHAT', href: '/chat', current: false },
   { name: 'GROUPS', href: '/group', current: false },
   { name: 'MY ACCOUNT', href: '/userProfile', current: true },
 ];
@@ -34,13 +33,7 @@ export default function Navbar() {
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="flex items-center">
-              <NavLink to="/" className="reroutetohome">
-                <img
-                  className="h-11 w-auto mr-2 hover:text-orange-500"
-                  src={img1}
-                  alt="Your Project"
-                />
-              </NavLink>
+              
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
                   {navigation.map((item) => (

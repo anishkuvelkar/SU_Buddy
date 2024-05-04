@@ -33,7 +33,6 @@ export default function App() {
             <Route path="/about" element={<><Navbar /><About /></>} />
             <Route path="/login" element={<><Navbar /><Login/></>} />
             <Route path="/home" element={<><HomeNavbar/><Home/></>} />
-            <Route path="/chat" element={<><HomeNavbar/><Chat/></>} />
             <Route path="/group" element={<><HomeNavbar/><Groups/></>} />
             <Route path="/register" element={<><Navbar /><Register/></>} />
             <Route path="/userProfile" element={<><HomeNavbar /><UserProfile/></>} />

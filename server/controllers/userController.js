@@ -62,8 +62,7 @@ const getCurrentUser = async (req, res) => {
       return res.status(401).json({ message: 'Unauthorized: Invalid token' });
       console.log("anish")
     }
-
-    // Assuming you have a function to fetch user details from the database
+   //Get user details
     const user = await getUserDetails(userId);
     console.log(user)
 
