@@ -11,11 +11,11 @@ const News = () => {
         <h2 className="text-3xl font-semibold mb-8">Latest News</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* News Section 1 */}
-          <a href="https://dailyorange.com/2024/03/su-new-covid-19-guidelines/" target="_blank" rel="noopener noreferrer" className="block">
+          <a href="https://dailyorange.com/" target="_blank" rel="noopener noreferrer" className="block">
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <img src={img9} alt="News 1" className="w-full h-96 object-cover" />
               <div className="p-6">
-                <p className="text-lg text-black">SU to no longer mandate COVID-19 isolation, requires 24 hours of no fever to return</p>
+                <p className="text-lg text-black">Recent news</p>
               </div>
             </div>
           </a>
