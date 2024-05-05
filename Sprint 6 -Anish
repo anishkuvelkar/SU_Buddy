@@ -1,0 +1,3 @@
+Added cloudinary so that all the images are stored on a cloud service and then are being fetched into out project rather than using local storage.
+Corrected the query process and also added some more code into it so that the images from cloud are also being displayed on the cards.
+Made some minor beautifying changes.

@@ -29,7 +29,7 @@ const Landing = () => {
         backgroundImage: `url(${img3})`, 
         backgroundSize: 'cover',
         backgroundPosition: 'center', 
-        height: '100vh',
+        minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -37,7 +37,16 @@ const Landing = () => {
         filter: 'brightness(90%)',
       }}
     >
-      <div style={{ position: 'absolute', left: 30, top: 90, width: '12cm', height: '15.5cm', backgroundColor: 'rgba(0, 0, 0, 0.5)', borderRadius: '20%' }}>
+      <div style={{ 
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+        borderRadius: '20%',
+        padding: '35px', // Use padding to create space inside the box
+        textAlign: 'center',
+        color: 'white',
+        maxWidth: '600px', // Max width for readability
+        width: '90%', // Responsive width
+        margin: '0 auto', // Center the div
+      }}>
         <p style={{ color: 'white', padding: '35px', textAlign: 'center' }}>
           Hey there! I'm your Syracuse Buddy, and I'm thrilled to be by your side as you navigate your journey as an international student. Studying abroad is an incredible adventure filled with new experiences and challenges, and I'm here to support you every step of the way.
 

@@ -14,8 +14,10 @@ const userSchema = new Schema({
     about:  {type: String,required: true},
     image: {type: String,required: true},
     password: {type: String, required: true},
-    confirmPassword: {type: String, required: true}
-})
+    confirmPassword: {type: String, required: true},
+    graduationYear: {type: String, required: true},
+    verified:{type : Boolean, default: false}
+});
 
 const UserModel = mongoose.model('User',userSchema);
 
